@@ -7,9 +7,3 @@ Objective: Learned asynchronous programming in Dart, handling time-consuming tas
 Widgets: FutureBuilder, Column, Row, Text, IconButton, Scaffold
 Packages: geolocator, http, flutter_spinkit
 
-
-##learning
-When using the web platform, the checkPermission method will return the LocationPermission.denied status, when the browser doesn't support the JavaScript Permissions API. Nevertheless, the getCurrentPosition and getPositionStream methods can still be used on the web platform.
-##learning 
-passing data from loading screen to loaction screen.
-
