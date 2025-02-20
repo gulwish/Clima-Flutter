@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
+
 //import 'package:geolocator_android/geolocator_web.dart';
+extension Ex on double {
+  double toPrecision(int n) => double.parse(toStringAsFixed(n));
+}
 
 class Location {
   double? longi;
@@ -8,20 +12,33 @@ class Location {
 
   Location({this.longi, this.lati});
 
-  void getPosition() async {
+  Future<void> getPosition() async {
+    LocationPermission permission;
     final LocationSettings locationSettings = WebSettings(
       accuracy: LocationAccuracy.high,
-      distanceFilter: 100,
-      maximumAge: Duration(minutes: 5),
     );
-    try {
-      Position position = await Geolocator.getCurrentPosition(
-        locationSettings: locationSettings,
-      );
-      lati = position.latitude;
-      longi = position.longitude;
-    } catch (e) {
-      print(e.toString());
+
+    permission = await Geolocator.checkPermission();
+    if (permission == LocationPermission.denied) {
+      permission = await Geolocator.requestPermission();
+      if (permission == LocationPermission.denied) {
+        return Future.error('Location permissions are denied');
+      }
+      if (permission == LocationPermission.deniedForever) {
+        // Permissions are denied forever, handle appropriately.
+        return Future.error(
+          'Location permissions are permanently denied, we cannot request permissions.',
+        );
+      }
+      try {
+        Position position = await Geolocator.getCurrentPosition(
+          locationSettings: locationSettings,
+        );
+        lati = position.latitude.toPrecision(1);
+        longi = position.longitude.toPrecision(1);
+      } catch (e) {
+        print(e.toString());
+      }
     }
   }
 }
