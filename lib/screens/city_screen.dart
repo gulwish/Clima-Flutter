@@ -29,7 +29,19 @@ class _CityScreenState extends State<CityScreen> {
                   child: Icon(Icons.arrow_back_ios, size: 50.0),
                 ),
               ),
-              Container(padding: EdgeInsets.all(20.0), child: null),
+              Container(
+                padding: EdgeInsets.all(20.0),
+                child: TextField(
+                  decoration: InputDecoration(
+                    filled: true,
+                    icon: Icon(Icons.location_city),
+                    hintText: 'enter city name',
+                  ),
+                  onChanged: (value){
+                    print(value);
+                  },
+                ),
+              ),
               TextButton(
                 style: flatButtonStyle,
                 onPressed: () {},

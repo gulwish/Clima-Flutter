@@ -6,15 +6,13 @@ class NetworkHelper {
   final String? url;
   NetworkHelper({this.url});
 
-  Future<void> getData() async {
+  Future<dynamic> getData() async {
     try {
       var tempUrl = Uri.parse(url!);
       http.Response response = await http.get(tempUrl);
 
       if (response.statusCode == 200) {
-        print("inside response");
         String data = response.body;
-        print(data);
 
         return jsonDecode(data);
       } else {
